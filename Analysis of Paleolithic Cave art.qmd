@@ -1,0 +1,77 @@
+---
+title: "Analysis of Paleolithic Cave art: Relationship between Depictions and Bone Abundance"
+author: "Carlos Pineda"
+date: now
+self-contained: true
+format: html
+editor: visual
+---
+
+##Introduction 
+
+\[In this report I will analyze multiple data regarding cave art in the Paleolithic era. Specifically focusing on the correlation of the number of cave art of multiple animals and their bone abundance per region. The report will focus on the south west region of France. The aim of the report is to answer the following question: Is there a direct realtion between the amount of animal depicitons and the bone abundance during the Paleolithic era and what does the relation tell us? \]
+
+
+
+##Data
+
+```{r}
+library(tidyverse)
+
+
+my_data <-read_csv("Table 1 from Rice and Patterson 1985 - long and tidy.csv")
+```
+The specific data analyzed in this report is the total count of cave art of South West France , the total count of bones in the region , and the number of regions in South West France . The information and data recollected for this report is based on the findings in "Rice and Patterson 1985"
+```{r}
+# in lin R code fro my sentences
+art_count <- sum(my_data$`Art count`)
+
+
+```
+```{r}
+region <- sum(my_data$`Region`)
+```
+```{r}
+bone_abundance <- sum(my_data$`Bone abundance`)
+```
+
+##Exploratory Data Analysis
+
+```{r}
+ggplot(my_data) + 
+  aes(`Art count`) +
+  geom_histogram() +
+  facet_wrap(~ taxa)
+```
+
+```{r}
+ggplot(my_data) + 
+  aes(`Bone abundance`) +
+  geom_histogram() +
+  facet_wrap(~ taxa)
+```
+
+
+
+
+```{r}
+ggplot(my_data) +
+  aes(`Art count`, 
+      `Bone abundance`,
+      colour = taxa) +
+  geom_point() +
+  geom_smooth(method = "lm",
+              se = FALSE) +
+  theme_minimal()
+
+
+## After analyzing the previous charts there are two key aspects to highlight. The first one is the discrepancy between the amount of reindeer and bovines cave art and the bone abundance of these animals. From the third plot we can see there is a high amount of reindeer bones, but the amount of cave art is very low. On the other hand we can see a high count of bovine cave art and not a high amount of bovine bones in the area. The second aspect to highlight is The direct relation between deer and ibex art count and their respective bone abundance
+
+```
+
+##Conclusion 
+\[In conclusion, there is a direct relationship between the cave art and the bone abundance of animals during the Paleolithic era. However this direct relation only applies to certain animals like deer, ibex, and horse. There are some animals like the reindeer and bovines who have a bizarre relation with reindeer having a higher bone abundance but low cave depictions and bovines having a high art count but a lower bone abundance. One expalnation for the difference between animals is their environmental availability, animals that were hunted more like bovines had a higher art count since humans coexisted with them for more time as opposed to reindeer.  \]
+
+##References
+
+Rice, P. C., & Paterson, A. L. (1985). Cave Art and Bones: Exploring the interrelationships. American Anthropologist, 87(1), 94–100. https://doi.org/10.1525/aa.1985.87.1.02a00080
